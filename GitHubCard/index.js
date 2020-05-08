@@ -125,7 +125,19 @@ axios.get("https://api.github.com/users/iDecisive").then(response => {
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ["tetondan", "dustinmyers", "justsml", "luishrd", "bigknell"];
+
+followersArray.forEach(item => {
+
+  let link = "https://api.github.com/users/" + item;
+
+  axios.get(link).then(response => {
+  
+  document.querySelector(".cards").appendChild(loadCard(response.data));
+
+  }).catch(_ => "Catch")
+
+})
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
