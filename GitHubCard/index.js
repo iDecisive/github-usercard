@@ -167,3 +167,34 @@ followersArray.forEach(item => {
     luishrd
     bigknell
 */
+
+
+//Stretch below 
+
+let newFollowersArr = [];
+
+axios.get("https://api.github.com/users/BigKnell/followers").then(response => {
+  
+  response.data.forEach(item => {
+
+    newFollowersArr.push(item.login);
+
+  });
+  
+  console.log(newFollowersArr);
+
+}).catch(_ => "Catch")
+
+newFollowersArr.forEach(item => {
+
+  let link = "https://api.github.com/users/" + item;
+
+  console.log(link)
+
+  axios.get(link).then(response => {
+  
+    document.querySelector(".cards").appendChild(loadCard(response.data));
+
+  }).catch(_ => "Catch")
+
+})
