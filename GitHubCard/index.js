@@ -3,7 +3,14 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
- 
+
+axios.get("https://api.github.com/users/iDecisive").then(response => {
+  
+  console.log(response.data);
+
+}).catch(_ => "Catch")
+
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -16,6 +23,96 @@
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+
+let loadCard = cardData => { //Creates and returns a card
+
+//Creating elements
+
+let card = document.createElement("div")
+
+let profilePic = document.createElement("img") //on left side of card
+
+let cardInfo = document.createElement("div") //Everything inside this will be on the right side of the card
+
+let name = document.createElement("h3")
+
+let userName = document.createElement("p")
+
+let location = document.createElement("p")
+
+let profile = document.createElement("p")
+
+//let profileLink = document.createElement("a")
+
+let followers = document.createElement("p")
+
+let following = document.createElement("p")
+
+let bio = document.createElement("p")
+
+
+//Adding classes
+
+card.classList.add("card");
+
+cardInfo.classList.add("card-info")
+
+name.classList.add("name")
+
+userName.classList.add("username")
+
+
+//Structuring
+
+card.appendChild(profilePic)
+
+card.appendChild(cardInfo)
+
+cardInfo.appendChild(name)
+
+cardInfo.appendChild(userName)
+
+cardInfo.appendChild(location)
+
+cardInfo.appendChild(profile)
+
+//profile.appendChild(profileLink) 
+
+cardInfo.appendChild(followers)
+
+cardInfo.appendChild(following)
+
+cardInfo.appendChild(bio)
+
+
+//Assigning values
+
+profilePic.src = cardData.avatar_url;
+
+name.textContent = cardData.login;
+
+location.textContent = "Location: " + cardData.location;
+
+profile.innerHTML = "Profile: <a href='" +cardData.url +"'>" + cardData.url +"</a>";
+
+followers.textContent = "Followers: " + cardData.followers;
+
+following.textContent = "Following: " + cardData.following;
+
+bio.textContent = "Bio: " + cardData.bio;
+
+return card;
+
+} //func end
+
+//Getting card data and returning it below:
+
+axios.get("https://api.github.com/users/iDecisive").then(response => {
+  
+  document.querySelector(".cards").appendChild(loadCard(response.data));
+
+}).catch(_ => "Catch")
+
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
